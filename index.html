@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberFlix - Movie Recommendations</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <style>
+        body {
+            font-family: 'Share Tech Mono', monospace;
+            background-color: #0a0a1f;
+            color: #00ff95;
+        }
+        .cyber-card {
+            background: rgba(16, 16, 48, 0.8);
+            border: 1px solid #00ff95;
+            box-shadow: 0 0 15px rgba(0, 255, 149, 0.3);
+        }
+        .cyber-glow {
+            text-shadow: 0 0 10px rgba(0, 255, 149, 0.5);
+        }
+        .cyber-button {
+            background: linear-gradient(45deg, #00ff95, #00b8ff);
+            transition: all 0.3s ease;
+        }
+        .cyber-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 20px rgba(0, 255, 149, 0.5);
+        }
+        .movie-card {
+            transition: transform 0.3s ease;
+        }
+        .movie-card:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <nav class="p-4 border-b border-[#00ff95]">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold font-['Orbitron'] cyber-glow">CYBERFLIX</h1>
+            <div class="flex items-center gap-4">
+                <input type="search" placeholder="Search movies..." class="bg-[#1a1a3a] border border-[#00ff95] rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#00ff95]">
+                <button class="cyber-button px-4 py-2 rounded font-bold">LOGIN</button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mx-auto px-4 py-8">
+        <section class="mb-12">
+            <h2 class="text-3xl font-['Orbitron'] mb-6 cyber-glow">Recommended for You</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" id="recommendedMovies">
+                <!-- Movies will be inserted here by JavaScript -->
+            </div>
+        </section>
+
+        <section class="mb-12">
+            <h2 class="text-3xl font-['Orbitron'] mb-6 cyber-glow">Trending Now</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" id="trendingMovies">
+                <!-- Movies will be inserted here by JavaScript -->
+            </div>
+        </section>
+    </main>
+
+    <script type="module">
+        // Sample movie data (in real app, this would come from an API)
+        const movies = [
+            { id: 1, title: "Neural Runner 2077", rating: 4.8, image: "https://images.unsplash.com/photo-1505686994434-e3cc5abf1330?w=500&auto=format", genre: "Sci-fi" },
+            { id: 2, title: "Digital Dreams", rating: 4.5, image: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=500&auto=format", genre: "Thriller" },
+            { id: 3, title: "Neon Nights", rating: 4.7, image: "https://images.unsplash.com/photo-1605106702734-205df224ecce?w=500&auto=format", genre: "Action" },
+            { id: 4, title: "Circuit Breaker", rating: 4.6, image: "https://images.unsplash.com/photo-1626814026160-2237a95fc5a0?w=500&auto=format", genre: "Drama" }
+        ];
+
+        function createMovieCard(movie) {
+            return `
+                <div class="cyber-card rounded-lg overflow-hidden movie-card">
+                    <img src="${movie.image}" alt="${movie.title}" class="w-full h-48 object-cover">
+                    <div class="p-4">
+                        <h3 class="text-xl font-bold mb-2">${movie.title}</h3>
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm">${movie.genre}</span>
+                            <div class="flex items-center">
+                                <i class="bi bi-star-fill text-yellow-400 mr-1"></i>
+                                <span>${movie.rating}</span>
+                            </div>
+                        </div>
+                        <button class="cyber-button w-full mt-4 py-2 rounded text-black font-bold">Watch Now</button>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Populate recommended movies
+        const recommendedContainer = document.getElementById('recommendedMovies');
+        movies.forEach(movie => {
+            recommendedContainer.innerHTML += createMovieCard(movie);
+        });
+
+        // Populate trending movies
+        const trendingContainer = document.getElementById('trendingMovies');
+        [...movies].reverse().forEach(movie => {
+            trendingContainer.innerHTML += createMovieCard(movie);
+        });
+
+        // Simple recommendation system simulation
+        document.querySelectorAll('.movie-card').forEach(card => {
+            card.addEventListener('click', () => {
+                // In a real app, this would update user preferences and trigger new recommendations
+                console.log('Movie selected:', card.querySelector('h3').textContent);
+            });
+        });
+    </script>
+<script>document.body.addEventListener('wheel', e => { if (!e.ctrlKey) return; e.preventDefault(); return }, { passive: false })</script>
+	</body>
+</html>
